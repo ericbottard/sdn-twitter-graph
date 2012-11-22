@@ -1,13 +1,13 @@
 package org.neo4j.twitter_graph.services;
 
-import org.neo4j.twitter_graph.domain.Follows;
-import org.neo4j.twitter_graph.domain.Tweet;
-import org.neo4j.twitter_graph.domain.Tag;
-import org.neo4j.twitter_graph.domain.User;
 import org.neo4j.twitter_graph.repositories.TagRepository;
 import org.neo4j.twitter_graph.repositories.TweetRepository;
 import org.neo4j.twitter_graph.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.samples._03_neo4j.domain.Follows;
+import org.springframework.data.samples._03_neo4j.domain.Tag;
+import org.springframework.data.samples._03_neo4j.domain.Tweet;
+import org.springframework.data.samples._03_neo4j.domain.User;
 import org.springframework.social.twitter.api.*;
 import org.springframework.social.twitter.api.impl.TwitterTemplate;
 import org.springframework.stereotype.Service;
@@ -71,7 +71,7 @@ public class TwitterService {
         final FriendOperations friendOperations = new TwitterTemplate().friendOperations();
         Map<String,User> users=new HashMap<String, User>(); 
         for (User user : userRepository.findAll()) {
-            users.put(user.getUser(),user);    
+            users.put(user.getName(),user);    
         }
         for (Map.Entry<String, User> entry : users.entrySet()) {
             addFriends(friendOperations, users, entry);
@@ -85,7 +85,7 @@ public class TwitterService {
             for (TwitterProfile profile : friendOperations.getFriends(name)) {
                 final User friend = users.get(profile.getScreenName());
                 if (friend == null) continue;
-                System.out.println(name + " FOLLOWS " + friend.getUser());
+                System.out.println(name + " FOLLOWS " + friend.getName());
                 userRepository.createRelationshipBetween(user, friend, Follows.class, "FOLLOWS");
             }
             Thread.sleep(TimeUnit.SECONDS.toMillis(2));

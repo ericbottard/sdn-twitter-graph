@@ -1,4 +1,4 @@
-package org.neo4j.twitter_graph.domain;
+package org.springframework.data.samples._03_neo4j.domain;
 
 import org.springframework.data.neo4j.annotation.*;
 

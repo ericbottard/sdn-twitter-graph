@@ -1,14 +1,15 @@
 package org.neo4j.twitter_graph;
 
-import org.neo4j.twitter_graph.domain.Tweet;
-import org.neo4j.twitter_graph.services.TwitterService;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
+import org.neo4j.twitter_graph.repositories.TagRepository;
+import org.neo4j.twitter_graph.services.TwitterService;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.data.samples._03_neo4j.domain.Tweet;
 
 /**
  * @author mh
@@ -22,6 +23,7 @@ public class TwitterGraph {
         }
         final ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("classpath:TwitterGraph-"+args[0]+".xml");
         addShutdownHook(ctx);
+        
         final TwitterService service = ctx.getBean(TwitterService.class);
         Long lastTweetId=args.length==3 ? Long.parseLong(args[2]) : null;
         while (true) {

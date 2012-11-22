@@ -3,11 +3,11 @@ package org.neo4j.twitter_graph.services;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.neo4j.helpers.collection.IteratorUtil;
-import org.neo4j.twitter_graph.domain.Tag;
-import org.neo4j.twitter_graph.domain.Tweet;
-import org.neo4j.twitter_graph.domain.User;
 import org.neo4j.twitter_graph.repositories.TweetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.samples._03_neo4j.domain.Tag;
+import org.springframework.data.samples._03_neo4j.domain.Tweet;
+import org.springframework.data.samples._03_neo4j.domain.User;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,14 +38,14 @@ public class TwitterServiceTest {
         assertEquals((Long)123L,tweet.getTweetId());
         final User sender = tweet.getSender();
         assertNotNull(sender.getId());
-        assertEquals("springsource", sender.getUser());
+        assertEquals("springsource", sender.getName());
     }
     @Test
     @Transactional
     public void testImportTweetWithMentions() throws Exception {
         final org.springframework.social.twitter.api.Tweet source = new org.springframework.social.twitter.api.Tweet(123L, "Text @mesirii", null, "springsource", null, null, 234L, null, null);
         final Tweet tweet = twitterService.importTweet(source);
-        assertEquals("mesirii", first(tweet.getMentions()).getUser());
+        assertEquals("mesirii", first(tweet.getMentions()).getName());
     }
     @Test
     @Transactional
